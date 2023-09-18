@@ -1,13 +1,11 @@
 FROM node:16-alpine
 
-WORKDIR /index
+RUN mkdir -p /usr/src/app
 
-COPY package.json package-lock.json ./
+WORKDIR /usr/src/app
 
+ADD package.json /usr/src/app/package.json
 RUN npm install --production
+ADD server.js /usr/src/app/server.js
 
-COPY . .
-
-EXPOSE 3000
-
-CMD node index.js
+ENTRYPOINT ["node", "server.js"]
